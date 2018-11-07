@@ -34,4 +34,4 @@ Should start the daemon in background
 * psutil-demo.py contain the code to get your system telemetry
 * iot-hub-client.py contain the minimal code to send your systems telemetry
 
-`/!\ This code is running on my raspi but neither the requirements.txt nore the deployment has been tested on a fresh install. Proceed carefully and open a PR if you encounter or fix any issue. Thanks /!\`
+`/!\ This code is running on my raspi but neither the requirements.txt nor the deployment has been tested on a fresh install. Proceed carefully and open a PR if you encounter or fix any issue. Thanks /!\`
