@@ -25,6 +25,7 @@ module.exports = async function (context, req) {
     const measure_telemetry = measure.telemetry;
 
     const device_session = cache.get(device_name);
+    cache.put(device_name,measure_telemetry);
 
     if(device_session === undefined) {
         const msg = `${timestamp} - ${app_name} - ${rule_name} - ${device_name} - ${JSON.stringify(measure_telemetry)}`;
@@ -36,7 +37,6 @@ module.exports = async function (context, req) {
             html: `<p>${msg}</p>`
         };
         sgMail.send(mail);
-        cache.put(device_name,measure_telemetry);
     }
 
     context.res = {
