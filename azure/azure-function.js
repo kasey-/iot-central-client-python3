@@ -13,19 +13,17 @@ let cache = new Cache({
 });
 
 module.exports = async function (context, req) {
-    const timestamp = req.body.timestamp;
-    const rule = req.body.rule;
-    const device = req.body.device;
-    const app = req.body.application;
-    const measure = req.body.device.measurements;
-
-    const app_name = app.name;
-    const rule_name = rule.name;
-    const device_name = device.name;
-    const measure_telemetry = measure.telemetry;
+    const {
+        timestamp,
+        application:{name:app_name},
+        rule:{name:rule_name},
+        device:{
+            name:device_name,
+            measurements:{telemetry:measure_telemetry}
+        }
+    } = req.body;
 
     const device_session = cache.get(device_name);
-    cache.put(device_name,measure_telemetry);
 
     if(device_session === undefined) {
         const msg = `${timestamp} - ${app_name} - ${rule_name} - ${device_name} - ${JSON.stringify(measure_telemetry)}`;
@@ -39,6 +37,7 @@ module.exports = async function (context, req) {
         sgMail.send(mail);
     }
 
+    cache.put(device_name,measure_telemetry);
     context.res = {
         status: 200,
         body: ""
