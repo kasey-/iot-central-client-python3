@@ -32,6 +32,7 @@ def get_sys_params(sample_delay):
         'cpu_1_p':cpu_p[1],
         'cpu_2_p':cpu_p[2],
         'cpu_3_p':cpu_p[3],
+        'cpu_a_p':sum(cpu_p),
         'cpu_t':cpu_t,
         'mem_p':mem_p,
         'dsk_p':dsk_p,
