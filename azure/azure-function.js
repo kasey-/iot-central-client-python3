@@ -1,10 +1,10 @@
 const sgMail = require('@sendgrid/mail');
 const Cache = require('ttl');
 
-const sendgrid_key = 'ADD HERE SENDGRID KEY';
-const email_from = 'ADD HERE FROM EMAIL';
-const email_to = 'ADD HERE DEST EMAIL';
-const ttl_life = 60; // seconds
+const sendgrid_key = process.env['SENDGRID_KEY'];
+const email_from = process.env['EMAIL_FROM'];
+const email_to = process.env['EMAIL_TO'];
+const ttl_life = parseInt(process.env['TTL_LIFE']); // seconds
 
 sgMail.setApiKey(sendgrid_key);
 let cache = new Cache({
@@ -35,9 +35,9 @@ module.exports = async function (context, req) {
             html: `<p>${msg}</p>`
         };
         sgMail.send(mail);
+        cache.put(device_name,measure_telemetry);
     }
 
-    cache.put(device_name,measure_telemetry);
     context.res = {
         status: 200,
         body: ""
